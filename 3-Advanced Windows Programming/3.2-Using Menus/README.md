@@ -8,6 +8,10 @@
 
 3. Responding to Menu Event Messages
 
+
+
+![3.2_0](./screenshots/3.2_0.png)
+
 ![3.2_1](./screenshots/3.2_1.png)
 
 ![3.2_2](./screenshots/3.2_2.png)
