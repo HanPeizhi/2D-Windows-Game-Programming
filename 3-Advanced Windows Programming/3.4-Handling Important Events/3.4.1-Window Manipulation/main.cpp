@@ -131,6 +131,31 @@ LRESULT CALLBACK WindowProc1(HWND hwnd,
 			ReleaseDC(hwnd, hdc);
 		}
 
+		case WM_MOVE:{
+			// extract the position
+			int xpos = LOWORD(lparam);
+			int ypos = HIWORD(lparam);
+
+			// get a graphics context
+			hdc = GetDC(hwnd);
+
+			// set the foreground color to green
+			SetTextColor(hdc, RGB(0,255,0));
+
+			// set the background color to black
+			SetBkColor(hdc, RGB(0,0,0));
+
+			// set the transparency mode to OPAQUE
+			SetBkMode(hdc, OPAQUE);
+
+			// draw the size of the window
+			sprintf(buffer,"WM_MOVE Called -  New Positition = (%d,%d)", xpos, ypos);
+			TextOut(hdc, 0,0, buffer, strlen(buffer));
+
+			// release the dc back
+			ReleaseDC(hwnd, hdc);
+		} break;
+
 		case WM_PAINT:{
 			// simply validate the window
 			hdc = BeginPaint(hwnd,&ps);	 
@@ -140,6 +165,19 @@ LRESULT CALLBACK WindowProc1(HWND hwnd,
 			 
 			// return success
 			return(0);
+		} break;
+
+		case WM_CLOSE:{
+			// show a message box
+			int result = MessageBox(hwnd, "Are you sure you want to close this application?",
+									"WM_CLOSE Message Processor", MB_YESNO | MB_ICONQUESTION);
+			// change to close or not
+			if(result == IDYES){
+				return DefWindowProc(hwnd, msgId, wparam, lparam);
+			}
+			else return 0;
+
+
 		} break;
 
 		case WM_DESTROY:{
